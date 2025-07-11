@@ -44,6 +44,8 @@ next-env.d.ts
 *firebase-adminsdk*.json
 firebase-debug.log
 .firebase/
+firebase-service-account.json
+
 
 # IDE
 .vscode/

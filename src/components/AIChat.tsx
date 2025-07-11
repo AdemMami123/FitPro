@@ -11,28 +11,34 @@ interface Message {
 }
 
 export default function AIChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: "**Hey! I'm FitPro AI 👋**\n\nI help with:\n• Workouts & exercises\n• Nutrition advice\n• Motivation & tips\n\nWhat's your question?",
-      sender: 'ai',
-      timestamp: new Date()
-    }
-  ])
+  const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isLoadingHistory, setIsLoadingHistory] = useState(true)
+  const [isClient, setIsClient] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
-  // Load chat history on component mount
+  // Handle client-side hydration
   useEffect(() => {
+    setIsClient(true)
+    
+    // Set initial message after hydration
+    const initialMessage: Message = {
+      id: '1',
+      content: "**Hey! I'm FitPro AI 👋**\n\nI help with:\n• Workouts & exercises\n• Nutrition advice\n• Motivation & tips\n\nWhat's your question?",
+      sender: 'ai',
+      timestamp: new Date()
+    }
+    setMessages([initialMessage])
+    
+    // Load chat history
     const loadChatHistory = async () => {
       try {
-        const result = await getChatHistory('default') // Use default session
+        const result = await getChatHistory('default')
         if (result.success && result.messages && result.messages.length > 0) {
           const formattedHistory = result.messages.map(msg => ({
             id: msg.id,
@@ -143,35 +149,43 @@ export default function AIChat() {
 
       {/* Messages */}
       <div className="flex-1 overflow-y-auto mb-4 space-y-4 max-h-96 bg-gray-50 dark:bg-gray-900 rounded-lg p-4">
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
+        {!isClient ? (
+          <div className="text-center py-8">
+            <div className="animate-pulse">
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto mb-2"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mx-auto"></div>
+            </div>
+          </div>
+        ) : (
+          messages.map((message) => (
             <div
-              className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
-                message.sender === 'user'
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700'
-              }`}
+              key={message.id}
+              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <div className={`text-sm ${message.sender === 'ai' ? 'whitespace-pre-line' : ''}`}>
-                {message.content.split('\n').map((line, index) => {
-                  // Handle bold text formatting
-                  if (line.startsWith('**') && line.endsWith('**')) {
-                    return (
-                      <div key={index} className="font-semibold mt-2 mb-1 text-purple-600 dark:text-purple-400">
-                        {line.replace(/\*\*/g, '')}
-                      </div>
-                    );
-                  }
-                  // Handle bullet points
-                  if (line.startsWith('•')) {
-                    return (
-                      <div key={index} className="ml-2 flex items-start">
-                        <span className="text-green-500 mr-2 mt-1">•</span>
-                        <span>{line.substring(1).trim()}</span>
-                      </div>
+              <div
+                className={`max-w-xs lg:max-w-md px-4 py-3 rounded-lg ${
+                  message.sender === 'user'
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-200 dark:border-gray-700'
+                }`}
+              >
+                <div className={`text-sm ${message.sender === 'ai' ? 'whitespace-pre-line' : ''}`}>
+                  {message.content.split('\n').map((line, index) => {
+                    // Handle bold text formatting
+                    if (line.startsWith('**') && line.endsWith('**')) {
+                      return (
+                        <div key={index} className="font-semibold mt-2 mb-1 text-purple-600 dark:text-purple-400">
+                          {line.replace(/\*\*/g, '')}
+                        </div>
+                      );
+                    }
+                    // Handle bullet points
+                    if (line.startsWith('•')) {
+                      return (
+                        <div key={index} className="ml-2 flex items-start">
+                          <span className="text-green-500 mr-2 mt-1">•</span>
+                          <span>{line.substring(1).trim()}</span>
+                        </div>
                     );
                   }
                   // Handle numbered lists
@@ -194,11 +208,12 @@ export default function AIChat() {
                 })}
               </div>
               <p className="text-xs mt-2 opacity-70">
-                {message.timestamp.toLocaleTimeString()}
+                {isClient ? message.timestamp.toLocaleTimeString() : ''}
               </p>
             </div>
           </div>
-        ))}
+        ))
+        )}
         
         {isLoading && (
           <div className="flex justify-start">
