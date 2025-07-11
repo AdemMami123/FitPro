@@ -69,6 +69,8 @@ export async function saveWorkout(workout: WorkoutSession) {
     const workoutData = {
       ...workout,
       userId,
+      startTime: workout.startTime.toISOString(),
+      endTime: workout.endTime ? workout.endTime.toISOString() : null,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
     }
@@ -356,5 +358,61 @@ export async function getExerciseHistory(exerciseName: string) {
   } catch (error) {
     console.error('Error fetching exercise history:', error)
     return { success: false, error: 'Failed to fetch exercise history' }
+  }
+}
+
+export async function getWorkoutsByDateRange(startDate: Date, endDate: Date) {
+  try {
+    const cookieStore = await cookies()
+    const token = cookieStore.get('session')?.value
+
+    if (!token) {
+      return { success: false, error: 'Not authenticated' }
+    }
+
+    const decodedToken = await verifyUserSession()
+    if (!decodedToken) {
+      return { success: false, error: 'Invalid token' }
+    }
+
+    const userId = decodedToken.uid
+    const workoutsRef = db.collection('workouts')
+    const query = workoutsRef
+      .where('userId', '==', userId)
+      .where('startTime', '>=', startDate.toISOString())
+      .where('startTime', '<=', endDate.toISOString())
+      .orderBy('startTime', 'desc')
+
+    const snapshot = await query.get()
+    const workouts: WorkoutSession[] = []
+
+    snapshot.forEach((doc: any) => {
+      const data = doc.data()
+      workouts.push({
+        id: doc.id,
+        name: data.name,
+        exercises: data.exercises || [],
+        startTime: new Date(data.startTime),
+        endTime: data.endTime ? new Date(data.endTime) : undefined,
+        notes: data.notes
+      })
+    })
+
+    return { success: true, workouts }
+  } catch (error) {
+    console.error('Error fetching workouts by date range:', error)
+    return { success: false, error: 'Failed to fetch workouts' }
+  }
+}
+
+export async function getWorkoutsByMonth(year: number, month: number) {
+  try {
+    const startDate = new Date(year, month - 1, 1)
+    const endDate = new Date(year, month, 0, 23, 59, 59)
+    
+    return await getWorkoutsByDateRange(startDate, endDate)
+  } catch (error) {
+    console.error('Error fetching workouts by month:', error)
+    return { success: false, error: 'Failed to fetch workouts for month' }
   }
 }

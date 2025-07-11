@@ -111,20 +111,22 @@ export default async function DashboardPage() {
           </div>
         </Link>
 
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-          <div className="flex items-center mb-4">
-            <div className="bg-yellow-100 dark:bg-yellow-900/50 rounded-full p-3">
-              <svg className="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+        <Link href="/calendar">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <div className="flex items-center mb-4">
+              <div className="bg-yellow-100 dark:bg-yellow-900/50 rounded-full p-3">
+                <svg className="w-6 h-6 text-yellow-600 dark:text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Workout Calendar</h3>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Workout Calendar</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">View your workout schedule and history.</p>
+            <div className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors inline-block">
+              View Calendar
+            </div>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">View your workout schedule and history.</p>
-          <div className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors inline-block">
-            View Calendar
-          </div>
-        </div>
+        </Link>
 
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center mb-4">
