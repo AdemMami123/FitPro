@@ -103,35 +103,39 @@ export default async function DashboardPage() {
           </div>
         </Link>
 
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-          <div className="flex items-center mb-4">
-            <div className="bg-orange-100 dark:bg-orange-900/50 rounded-full p-3">
-              <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
+        <Link href="/log-workout">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <div className="flex items-center mb-4">
+              <div className="bg-orange-100 dark:bg-orange-900/50 rounded-full p-3">
+                <svg className="w-6 h-6 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Log Workout</h3>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Log Workout</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">Track your workouts and monitor your progress.</p>
+            <button className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors">
+              Log Workout
+            </button>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">Track your workouts and monitor your progress.</p>
-          <button className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors">
-            Log Workout
-          </button>
-        </div>
+        </Link>
 
-        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-          <div className="flex items-center mb-4">
-            <div className="bg-red-100 dark:bg-red-900/50 rounded-full p-3">
-              <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-              </svg>
+        <Link href="/progress">
+          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
+            <div className="flex items-center mb-4">
+              <div className="bg-red-100 dark:bg-red-900/50 rounded-full p-3">
+                <svg className="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Progress Tracking</h3>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Progress Tracking</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">View your fitness progress and achievements.</p>
+            <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+              View Progress
+            </button>
           </div>
-          <p className="text-gray-600 dark:text-gray-300 mb-4">View your fitness progress and achievements.</p>
-          <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
-            View Progress
-          </button>
-        </div>
+        </Link>
 
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
           <div className="flex items-center mb-4">

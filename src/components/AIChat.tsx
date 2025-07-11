@@ -28,17 +28,18 @@ export default function AIChat() {
     
     // Set initial message after hydration
     const initialMessage: Message = {
-      id: '1',
+      id: 'initial-welcome',
       content: "**Hey! I'm FitPro AI 👋**\n\nI help with:\n• Workouts & exercises\n• Nutrition advice\n• Motivation & tips\n\nWhat's your question?",
       sender: 'ai',
       timestamp: new Date()
     }
-    setMessages([initialMessage])
     
     // Load chat history
     const loadChatHistory = async () => {
       try {
         const result = await getChatHistory('default')
+        let allMessages = [initialMessage]
+        
         if (result.success && result.messages && result.messages.length > 0) {
           const formattedHistory = result.messages.map(msg => ({
             id: msg.id,
@@ -46,10 +47,20 @@ export default function AIChat() {
             sender: msg.sender,
             timestamp: new Date(msg.timestamp)
           }))
-          setMessages(prev => [...prev, ...formattedHistory])
+          
+          // Add history messages, but avoid duplicates
+          allMessages = [initialMessage, ...formattedHistory]
         }
+        
+        // Remove duplicates by ID
+        const uniqueMessages = allMessages.filter((message, index, self) => 
+          index === self.findIndex(m => m.id === message.id)
+        )
+        
+        setMessages(uniqueMessages)
       } catch (error) {
         console.error('Error loading chat history:', error)
+        setMessages([initialMessage])
       } finally {
         setIsLoadingHistory(false)
       }
@@ -72,7 +83,12 @@ export default function AIChat() {
       timestamp: new Date()
     }
 
-    setMessages(prev => [...prev, userMessage])
+    setMessages(prev => {
+      const newMessages = [...prev, userMessage]
+      return newMessages.filter((message, index, self) => 
+        index === self.findIndex(m => m.id === message.id)
+      )
+    })
     const messageToSend = inputMessage
     setInputMessage('')
     setIsLoading(true)
@@ -101,7 +117,12 @@ export default function AIChat() {
           sender: 'ai',
           timestamp: new Date()
         }
-        setMessages(prev => [...prev, aiMessage])
+        setMessages(prev => {
+          const newMessages = [...prev, aiMessage]
+          return newMessages.filter((message, index, self) => 
+            index === self.findIndex(m => m.id === message.id)
+          )
+        })
         
         // Save AI response to database
         await saveChatMessage(data.response, 'ai', 'default')
@@ -112,7 +133,12 @@ export default function AIChat() {
           sender: 'ai',
           timestamp: new Date()
         }
-        setMessages(prev => [...prev, errorMessage])
+        setMessages(prev => {
+          const newMessages = [...prev, errorMessage]
+          return newMessages.filter((message, index, self) => 
+            index === self.findIndex(m => m.id === message.id)
+          )
+        })
       }
     } catch (error) {
       console.error('Chat error:', error)
@@ -122,7 +148,12 @@ export default function AIChat() {
         sender: 'ai',
         timestamp: new Date()
       }
-      setMessages(prev => [...prev, errorMessage])
+      setMessages(prev => {
+        const newMessages = [...prev, errorMessage]
+        return newMessages.filter((message, index, self) => 
+          index === self.findIndex(m => m.id === message.id)
+        )
+      })
     } finally {
       setIsLoading(false)
     }
@@ -171,10 +202,11 @@ export default function AIChat() {
               >
                 <div className={`text-sm ${message.sender === 'ai' ? 'whitespace-pre-line' : ''}`}>
                   {message.content.split('\n').map((line, index) => {
+                    const lineKey = `${message.id}-line-${index}`
                     // Handle bold text formatting
                     if (line.startsWith('**') && line.endsWith('**')) {
                       return (
-                        <div key={index} className="font-semibold mt-2 mb-1 text-purple-600 dark:text-purple-400">
+                        <div key={lineKey} className="font-semibold mt-2 mb-1 text-purple-600 dark:text-purple-400">
                           {line.replace(/\*\*/g, '')}
                         </div>
                       );
@@ -182,7 +214,7 @@ export default function AIChat() {
                     // Handle bullet points
                     if (line.startsWith('•')) {
                       return (
-                        <div key={index} className="ml-2 flex items-start">
+                        <div key={lineKey} className="ml-2 flex items-start">
                           <span className="text-green-500 mr-2 mt-1">•</span>
                           <span>{line.substring(1).trim()}</span>
                         </div>
@@ -191,7 +223,7 @@ export default function AIChat() {
                   // Handle numbered lists
                   if (/^\d+\./.test(line.trim())) {
                     return (
-                      <div key={index} className="ml-2 flex items-start">
+                      <div key={lineKey} className="ml-2 flex items-start">
                         <span className="text-blue-500 mr-2 font-medium">{line.match(/^\d+\./)?.[0]}</span>
                         <span>{line.replace(/^\d+\.\s*/, '')}</span>
                       </div>
@@ -199,11 +231,11 @@ export default function AIChat() {
                   }
                   // Regular text
                   return line.trim() ? (
-                    <div key={index} className="mb-1">
+                    <div key={lineKey} className="mb-1">
                       {line}
                     </div>
                   ) : (
-                    <div key={index} className="h-2"></div>
+                    <div key={lineKey} className="h-2"></div>
                   );
                 })}
               </div>
