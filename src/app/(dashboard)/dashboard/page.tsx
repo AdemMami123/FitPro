@@ -6,32 +6,21 @@ import WorkoutPlanGenerator from '@/components/WorkoutPlanGenerator'
 import AIChat from '@/components/AIChat'
 
 export default async function DashboardPage() {
-  console.log('Dashboard Page: Getting current user');
-  
   const user = await getCurrentUser()
-  console.log('Dashboard Page: Current user:', user ? `${user.email} (${user.id})` : 'null');
   
   // This check is redundant since the layout already handles authentication,
   // but keeping it for safety
   if (!user) {
-    console.log('Dashboard Page: No user found, redirecting to sign-in');
     redirect('/sign-in')
   }
 
-  console.log('Dashboard Page: Getting user profile');
   const profile = await getUserProfile()
-  console.log('Dashboard Page: Profile:', profile ? 'exists' : 'null');
-  
   const profileComplete = await isProfileComplete()
-  console.log('Dashboard Page: Profile complete:', profileComplete);
 
   // If profile is not complete, redirect to profile setup
   if (!profileComplete) {
-    console.log('Dashboard Page: Profile not complete, redirecting to profile setup');
     redirect('/profile-setup')
   }
-
-  console.log('Dashboard Page: Rendering dashboard');
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
@@ -86,22 +75,7 @@ export default async function DashboardPage() {
 
       {/* Features Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <Link href="/profile-setup" className="block">
-          <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
-            <div className="flex items-center mb-4">
-              <div className="bg-blue-100 dark:bg-blue-900/50 rounded-full p-3">
-                <svg className="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Update Profile</h3>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">Modify your fitness profile and preferences.</p>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
-              Update Profile
-            </button>
-          </div>
-        </Link>
+        
 
         <Link href="/log-workout">
           <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -114,9 +88,9 @@ export default async function DashboardPage() {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Log Workout</h3>
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-4">Track your workouts and monitor your progress.</p>
-            <button className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors">
+            <div className="bg-orange-600 text-white px-4 py-2 rounded-md hover:bg-orange-700 transition-colors inline-block">
               Log Workout
-            </button>
+            </div>
           </div>
         </Link>
 
@@ -131,9 +105,9 @@ export default async function DashboardPage() {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Progress Tracking</h3>
             </div>
             <p className="text-gray-600 dark:text-gray-300 mb-4">View your fitness progress and achievements.</p>
-            <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">
+            <div className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors inline-block">
               View Progress
-            </button>
+            </div>
           </div>
         </Link>
 
@@ -147,9 +121,9 @@ export default async function DashboardPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Workout Calendar</h3>
           </div>
           <p className="text-gray-600 dark:text-gray-300 mb-4">View your workout schedule and history.</p>
-          <button className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors">
+          <div className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700 transition-colors inline-block">
             View Calendar
-          </button>
+          </div>
         </div>
 
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -162,9 +136,9 @@ export default async function DashboardPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Nutrition Guide</h3>
           </div>
           <p className="text-gray-600 dark:text-gray-300 mb-4">Get personalized nutrition recommendations.</p>
-          <button className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors">
+          <div className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition-colors inline-block">
             View Guide
-          </button>
+          </div>
         </div>
 
         <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 hover:scale-105">
@@ -177,9 +151,9 @@ export default async function DashboardPage() {
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white ml-3">Health Insights</h3>
           </div>
           <p className="text-gray-600 dark:text-gray-300 mb-4">Monitor your health metrics and trends.</p>
-          <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+          <div className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors inline-block">
             View Insights
-          </button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import ProfileSetup from '@/components/ProfileSetup'
-import ThemeTest from '@/components/ThemeTest'
 import { updateUserProfile } from '@/lib/actions/profile.action'
 import { UserProfile } from '@/types/fitness'
 
@@ -38,11 +37,6 @@ export default function ProfileSetupClient({ initialData }: ProfileSetupClientPr
 
   return (
     <div className="relative">
-      {/* Theme Debug Component */}
-      <div className="mb-6">
-        <ThemeTest />
-      </div>
-      
       {isSubmitting && (
         <div className="absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center z-10 rounded-lg">
           <div className="text-center">
