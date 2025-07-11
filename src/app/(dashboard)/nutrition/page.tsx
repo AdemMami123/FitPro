@@ -3,7 +3,7 @@ import { getUserProfile } from '@/lib/actions/profile.action'
 import { redirect } from 'next/navigation'
 import NutritionGuide from '@/components/NutritionGuide'
 import NutritionCalculator from '@/components/NutritionCalculator'
-import MealPlanner from '@/components/MealPlanner'
+import MealPlanner from '@/components/MealPlannerNew'
 import { UserProfile } from '@/types/fitness'
 
 export default async function NutritionPage() {

@@ -89,6 +89,7 @@ export default function MealPlanner({ profile }: { profile: UserProfile | null }
       if (data.success) {
         if (data.parsed) {
           setMealPlan(data.mealPlan)
+          setActiveTab('view')
         } else {
           setError('Generated meal plan but could not parse. Please try again.')
         }
