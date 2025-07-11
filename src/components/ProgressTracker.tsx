@@ -546,7 +546,7 @@ export default function ProgressTracker() {
                   <div className="grid grid-cols-2 gap-4 mb-4">
                     <div className="text-center">
                       <p className="text-2xl font-bold text-gray-900 dark:text-white">{exercise.bestWeight}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Best Weight (lbs)</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Best Weight ({unit})</p>
                     </div>
                     <div className="text-center">
                       <p className="text-2xl font-bold text-gray-900 dark:text-white">{exercise.bestReps}</p>
@@ -561,7 +561,7 @@ export default function ProgressTracker() {
                     </div>
                     <div className="text-center">
                       <p className="text-lg font-semibold text-gray-900 dark:text-white">{exercise.averageWeight.toFixed(1)}</p>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Avg Weight (lbs)</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-400">Avg Weight ({unit})</p>
                     </div>
                   </div>
                 </div>
