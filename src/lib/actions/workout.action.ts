@@ -110,12 +110,35 @@ export async function getWorkoutHistory(limit: number = 10) {
 
     snapshot.forEach((doc: any) => {
       const data = doc.data()
+      
+      // Handle invalid dates gracefully
+      let startTime: Date
+      let endTime: Date | undefined
+      
+      try {
+        startTime = new Date(data.startTime)
+        if (isNaN(startTime.getTime())) {
+          startTime = new Date() // fallback to current date
+        }
+      } catch (error) {
+        startTime = new Date() // fallback to current date
+      }
+      
+      try {
+        endTime = data.endTime ? new Date(data.endTime) : undefined
+        if (endTime && isNaN(endTime.getTime())) {
+          endTime = undefined
+        }
+      } catch (error) {
+        endTime = undefined
+      }
+      
       workouts.push({
         id: doc.id,
         name: data.name,
         exercises: data.exercises || [],
-        startTime: new Date(data.startTime),
-        endTime: data.endTime ? new Date(data.endTime) : undefined,
+        startTime,
+        endTime,
         notes: data.notes
       })
     })
