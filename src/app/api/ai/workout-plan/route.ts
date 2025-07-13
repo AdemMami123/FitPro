@@ -1,5 +1,5 @@
 import { generateText } from 'ai'
-import { geminiModel } from '@/lib/ai-config'
+import { geminiModel } from '@/lib/gemini'
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/actions/auth.action'
 import { getUserProfile } from '@/lib/actions/profile.action'

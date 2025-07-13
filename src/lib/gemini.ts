@@ -1,3 +1,5 @@
+// Server-side only: Google AI SDK configuration
+// This file should only be imported in API routes and server actions
 import { google } from '@ai-sdk/google';
 
 // Initialize the Google AI client with the model

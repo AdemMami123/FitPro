@@ -197,3 +197,110 @@ export interface AIChatSession {
   updatedAt: string;
   isActive: boolean;
 }
+
+// Health Insights and Metrics
+export interface HealthMetric {
+  id: string;
+  userId: string;
+  date: string;
+  type: 'weight' | 'body_fat' | 'muscle_mass' | 'water_weight' | 'bone_mass' | 'visceral_fat' | 'bmr' | 'body_age';
+  value: number;
+  unit: string;
+  source?: 'manual' | 'smart_scale' | 'body_scan' | 'calculated';
+  notes?: string;
+  createdAt: string;
+}
+
+export interface VitalSigns {
+  id: string;
+  userId: string;
+  date: string;
+  restingHeartRate?: number;
+  bloodPressure?: {
+    systolic: number;
+    diastolic: number;
+  };
+  bloodOxygen?: number; // SpO2 percentage
+  temperature?: number; // in Celsius
+  notes?: string;
+  createdAt: string;
+}
+
+export interface SleepData {
+  id: string;
+  userId: string;
+  date: string;
+  bedTime?: string;
+  sleepTime?: string;
+  wakeTime?: string;
+  totalSleepDuration?: number; // in minutes
+  sleepQuality?: 1 | 2 | 3 | 4 | 5; // 1-5 rating
+  deepSleepDuration?: number; // in minutes
+  remSleepDuration?: number; // in minutes
+  lightSleepDuration?: number; // in minutes
+  awakenings?: number;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface StressLevel {
+  id: string;
+  userId: string;
+  date: string;
+  level: 1 | 2 | 3 | 4 | 5; // 1-5 scale
+  triggers?: string[];
+  notes?: string;
+  createdAt: string;
+}
+
+export interface HydrationEntry {
+  id: string;
+  userId: string;
+  date: string;
+  amount: number; // in ml
+  timestamp: string;
+  createdAt: string;
+}
+
+export interface HealthInsight {
+  id: string;
+  userId: string;
+  type: 'trend' | 'recommendation' | 'alert' | 'achievement';
+  category: 'weight' | 'fitness' | 'nutrition' | 'sleep' | 'stress' | 'hydration' | 'overall';
+  title: string;
+  message: string;
+  severity?: 'low' | 'medium' | 'high';
+  actionable?: boolean;
+  recommendations?: string[];
+  createdAt: string;
+  dismissed?: boolean;
+}
+
+export interface HealthDashboard {
+  userId: string;
+  lastUpdated: string;
+  currentMetrics: {
+    weight?: number;
+    bodyFat?: number;
+    bmi?: number;
+    restingHeartRate?: number;
+    averageSleep?: number;
+    stressLevel?: number;
+    hydrationGoal?: number;
+    dailyHydration?: number;
+  };
+  trends: {
+    weightTrend: 'up' | 'down' | 'stable';
+    fitnessProgress: 'improving' | 'declining' | 'stable';
+    sleepQuality: 'improving' | 'declining' | 'stable';
+    stressLevel: 'improving' | 'declining' | 'stable';
+  };
+  insights: HealthInsight[];
+  goals: {
+    targetWeight?: number;
+    targetBodyFat?: number;
+    dailyWaterGoal?: number;
+    sleepGoal?: number;
+    stepsGoal?: number;
+  };
+}
