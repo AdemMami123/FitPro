@@ -47,6 +47,13 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
                     Dashboard
                   </Link>
                   <Link 
+                    href="/social" 
+                    className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                    prefetch={true}
+                  >
+                    Social
+                  </Link>
+                  <Link 
                     href="/profile" 
                     className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
                     prefetch={true}
@@ -74,6 +81,12 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
                   className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors text-sm"
                 >
                   Dashboard
+                </Link>
+                <Link 
+                  href="/social" 
+                  className="text-gray-700 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition-colors text-sm"
+                >
+                  Social
                 </Link>
                 <Link 
                   href="/profile" 
